@@ -10,14 +10,24 @@ import {
 import {useState} from "react";
 import Generate from "../utils/generate";
 
+const generateCharMap = chars => {
+  let charMap = "";
+  if (chars.lower) {
+    charMap += "a-z";
+  }
+  if (chars.upper) {
+    charMap += "A-Z";
+  }
+  if (chars.numbers) {
+    charMap += "0-9";
+  }
+  if (chars.special) {
+    charMap += "!()-.?[]_`~;:!@#$%^&*+=";
+  }
+  return charMap
+}
+
 const Password = () => {
-  const [formData, setFormData] = useState({
-    site: "",
-    username: "",
-    password: "",
-    counter: "1",
-    charmap: "123456789",
-  });
   const [generated, setGenerated] = useState("");
   const [chars, setChars] = useState({
     lower: true,
@@ -25,6 +35,13 @@ const Password = () => {
     numbers: true,
     special: true,
   })
+  const [formData, setFormData] = useState({
+    site: "",
+    username: "",
+    password: "",
+    counter: "1",
+    charmap: generateCharMap(chars),
+  });
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -38,22 +55,7 @@ const Password = () => {
       [e.target.name.replace("char", "")]: e.target.checked,
     }
     setChars(newchars);
-
-    let charMap = "";
-    if (newchars.lower) {
-      charMap += "a-z";
-    }
-    if (newchars.upper) {
-      charMap += "A-Z";
-    }
-    if (newchars.numbers) {
-      charMap += "0-9";
-    }
-    if (newchars.special) {
-      charMap += "!()-.?[]_`~;:!@#$%^&*+=";
-    }
-
-    setFormData({...formData, charmap: charMap})
+    setFormData({...formData, charmap: generateCharMap(newchars)})
   }
 
   return (
