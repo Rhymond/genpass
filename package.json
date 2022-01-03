@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@mui/lab": "^5.0.0-alpha.63",
     "@mui/material": "^5.2.6",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -14,8 +15,6 @@
     "bcryptjs": "^2.4.3",
     "crypto": "npm:crypto-browserify",
     "crypto-browserify": "^3.12.0",
-    "stream": "npm:stream-browserify",
-    "stream-browserify": "^3.0.0",
     "ethers": "^5.5.2",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
@@ -23,6 +22,8 @@
     "react-app-rewired": "^2.1.11",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
+    "stream": "npm:stream-browserify",
+    "stream-browserify": "^3.0.0",
     "web-vitals": "^2.1.2",
     "xorshift": "^1.2.0",
     "xorshift.js": "^1.0.5"
@@ -50,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "2.5.1"
   }
 }
