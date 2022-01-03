@@ -1,11 +1,12 @@
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Tab } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { useState } from "react";
 import Password from "./password";
+import Config from "./config";
 
-const Layout = () => {
+const Layout = ({ account, secret }) => {
   const [value, setValue] = useState("1");
 
   const handleChange = (event, newValue) => {
@@ -16,7 +17,7 @@ const Layout = () => {
     <Box sx={{ width: "100%", typography: "body1" }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
+          <TabList onChange={handleChange}>
             <Tab label="Generate" value="1" />
             <Tab label="Config" value="2" />
           </TabList>
@@ -24,7 +25,9 @@ const Layout = () => {
         <TabPanel value="1">
           <Password />
         </TabPanel>
-        <TabPanel value="2">Config</TabPanel>
+        <TabPanel value="2">
+          <Config account={account} secret={secret} />
+        </TabPanel>
       </TabContext>
     </Box>
   );

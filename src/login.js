@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { injectedConnector } from "./connectors";
+import { injected } from "./connectors";
 
 function Login() {
   const [account, setAccount] = useState("");
@@ -25,7 +25,7 @@ function Login() {
       {!active ? (
         <button
           onClick={() => {
-            activate(injectedConnector);
+            activate(injected);
           }}
         >
           Login
