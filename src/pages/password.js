@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {
   Box,
-  Button,
+  Button, Checkbox,
   Container,
-  CssBaseline,
+  CssBaseline, FormControlLabel, FormGroup,
   TextField,
   Typography
 } from "@mui/material";
@@ -18,13 +18,42 @@ const Password = () => {
     counter: "1",
     charmap: "123456789",
   });
-
   const [generated, setGenerated] = useState("");
+  const [chars, setChars] = useState({
+    lower: true,
+    upper: true,
+    numbers: true,
+    special: true,
+  })
 
   const handleSubmit = e => {
     e.preventDefault();
     const gen = Generate(formData.site, formData.username, formData.password, formData.counter, 16, formData.charmap);
     setGenerated(gen);
+  }
+
+  const handleCharChange = e => {
+    const newchars = {
+      ...chars,
+      [e.target.name.replace("char", "")]: e.target.checked,
+    }
+    setChars(newchars);
+
+    let charMap = "";
+    if (newchars.lower) {
+      charMap += "a-z";
+    }
+    if (newchars.upper) {
+      charMap += "A-Z";
+    }
+    if (newchars.numbers) {
+      charMap += "0-9";
+    }
+    if (newchars.special) {
+      charMap += "!()-.?[]_`~;:!@#$%^&*+=";
+    }
+
+    setFormData({...formData, charmap: charMap})
   }
 
   return (
@@ -89,6 +118,32 @@ const Password = () => {
             onChange={(e) => setFormData({...formData, counter: e.target.value})}
             autoComplete="counter"
           />
+          <FormGroup row>
+            <FormControlLabel
+              control={
+                <Checkbox checked={chars.lower} onChange={handleCharChange} name="charlower" />
+              }
+              label="a-z"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={chars.upper} onChange={handleCharChange} name="charupper" />
+              }
+              label="A-Z"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={chars.numbers} onChange={handleCharChange} name="charnumbers" />
+              }
+              label="0-9"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={chars.special} onChange={handleCharChange} name="charspecial" />
+              }
+              label="^&$"
+            />
+          </FormGroup>
           <TextField
             margin="normal"
             required
