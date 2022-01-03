@@ -3,7 +3,7 @@ import {
   Box,
   Button, Checkbox,
   Container,
-  CssBaseline, FormControlLabel, FormGroup,
+  CssBaseline, FormControlLabel, FormGroup, Slider,
   TextField,
   Typography
 } from "@mui/material";
@@ -27,6 +27,8 @@ const generateCharMap = chars => {
   return charMap
 }
 
+let sliderInterval;
+
 const Password = () => {
   const [generated, setGenerated] = useState("");
   const [chars, setChars] = useState({
@@ -40,12 +42,13 @@ const Password = () => {
     username: "",
     password: "",
     counter: "1",
+    passwordLen: 12,
     charmap: generateCharMap(chars),
   });
 
   const handleSubmit = e => {
     e.preventDefault();
-    const gen = Generate(formData.site, formData.username, formData.password, formData.counter, 16, formData.charmap);
+    const gen = Generate(formData.site, formData.username, formData.password, formData.counter, formData.passwordLen, formData.charmap);
     setGenerated(gen);
   }
 
@@ -56,6 +59,13 @@ const Password = () => {
     }
     setChars(newchars);
     setFormData({...formData, charmap: generateCharMap(newchars)})
+  }
+
+  const handlePassLenChange = (e, val) => {
+    clearTimeout(sliderInterval);
+    sliderInterval = setTimeout(() => {
+      setFormData({...formData, passwordLen: Number(val)})
+    }, 200);
   }
 
   return (
@@ -157,6 +167,15 @@ const Password = () => {
             onChange={(e) => setFormData({...formData, charmap: e.target.value})}
             autoComplete="charmap"
           />
+          <Typography id="track-false-slider" sx={{ mt: 2 }}>
+            Password Length ( {formData.passwordLen} )
+          </Typography>
+          <Slider
+            valueLabelDisplay="auto"
+            defaultValue={12}
+            onChange={handlePassLenChange}
+            min={6}
+            max={32} />
           <Button
             type="submit"
             fullWidth
