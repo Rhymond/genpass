@@ -23,7 +23,7 @@ const Layout = ({ account, secret }) => {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <Password />
+          <Password account={account} />
         </TabPanel>
         <TabPanel value="2">
           <Config account={account} secret={secret} />

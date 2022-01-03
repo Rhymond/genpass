@@ -1,12 +1,15 @@
 import * as React from "react";
 import { useState } from "react";
+import jazzicon from "@metamask/jazzicon";
 import {
+  Avatar,
   Box,
   Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
   Slider,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -31,7 +34,7 @@ const generateCharMap = (chars) => {
 
 let sliderInterval;
 
-const Password = () => {
+const Password = ({ account }) => {
   const [generated, setGenerated] = useState("");
   const [chars, setChars] = useState({
     lower: true,
@@ -77,8 +80,19 @@ const Password = () => {
     }, 200);
   };
 
+  const jazz = jazzicon(64, parseInt(account.slice(2, 10), 16));
+
   return (
     <Box component="form" noValidate sx={{ mt: 1 }}>
+      <Stack mb={3} direction="row" spacing={2} alignItems="center">
+        <Avatar sx={{ width: 64, height: 64 }}>
+          <div dangerouslySetInnerHTML={{ __html: jazz.innerHTML }} />
+        </Avatar>
+        <Typography variant="h5" gutterBottom component="div">
+          {account.slice(0, 5)}....
+          {account.slice(account.length - 5, account.length)}
+        </Typography>
+      </Stack>
       <TextField
         margin="normal"
         required
