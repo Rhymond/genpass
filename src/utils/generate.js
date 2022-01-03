@@ -1,12 +1,17 @@
 import { createHash } from 'crypto';
 
-const Generate = (site, username, password, counter, passLen) => {
-  const charMap = "123456789"
-
+const Generate = (
+  site,
+  username,
+  password,
+  counter,
+  passLen,
+  charmap,
+) => {
   const data = [site, username, password, counter].join("&");
   const hash = createHash('sha256').update(data).digest()
 
-  return bytesToChar(charMap, hash.slice(0, passLen))
+  return bytesToChar(charmap, hash.slice(0, passLen))
 }
 
 export const bytesToChar = (charMap, bytes) => {

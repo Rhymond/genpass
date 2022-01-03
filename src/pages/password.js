@@ -2,15 +2,13 @@ import * as React from 'react';
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   CssBaseline,
-  FormControlLabel,
   TextField,
   Typography
 } from "@mui/material";
 import {useState} from "react";
-import Generate from "../uitls/generate";
+import Generate from "../utils/generate";
 
 const Password = () => {
   const [formData, setFormData] = useState({
@@ -18,13 +16,15 @@ const Password = () => {
     username: "",
     password: "",
     counter: "1",
-    generated: "",
-  })
+    charmap: "123456789",
+  });
+
+  const [generated, setGenerated] = useState("");
 
   const handleSubmit = e => {
     e.preventDefault();
-    const gen = Generate(formData.site, formData.username, formData.password, formData.counter, 16)
-    setFormData({...formData, generated: gen})
+    const gen = Generate(formData.site, formData.username, formData.password, formData.counter, 16, formData.charmap);
+    setGenerated(gen);
   }
 
   return (
@@ -89,6 +89,17 @@ const Password = () => {
             onChange={(e) => setFormData({...formData, counter: e.target.value})}
             autoComplete="counter"
           />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="charmap"
+            label="charmap"
+            id="charmap"
+            value={formData.charmap}
+            onChange={(e) => setFormData({...formData, charmap: e.target.value})}
+            autoComplete="charmap"
+          />
           <Button
             type="submit"
             fullWidth
@@ -105,7 +116,8 @@ const Password = () => {
             fullWidth
             name="generated"
             id="generated"
-            value={formData.generated}
+            label="generated password"
+            value={generated}
             disabled
           />
         </Box>
